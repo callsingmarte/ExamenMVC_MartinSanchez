@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ExamenMVC_SistemaGestiónEventos_MartinSanchez.Models.Inscripcion>
+
+
+@{
+    ViewBag.Title = "InscripcionAsistentes";
+}
+
+<h2>InscripcionAsistentes</h2>
+@if (Model.Count() > 0)
+{
+    <h2>Eventos @Model.First().Evento.Nombre</h2>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Telefono
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Asistente.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Asistente.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Asistente.Telefono)
+            </td>
+        </tr>
+    }
+</table>
+<div>
+    @Html.ActionLink("Volver a Listado", "Index")
+</div>
+
+

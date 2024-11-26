@@ -1,0 +1,56 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<ExamenMVC_SistemaGestiónEventos_MartinSanchez.Models.Inscripcion>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<h2>Inscripciones</h2>
+
+<p>
+    @Html.ActionLink("Crear Inscripcion", "Create", null, new { @class = "btn btn-primary" })
+</p>
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <label class="col-form-label col-auto m-0">Evento O Asistente</label>
+        <div class="col-auto m-0">
+            @Html.TextBox("searchString", null, new { @class="form-control" })
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-success">Buscar...</button>
+        </div>
+    </div>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Evento", "Index", new { sortOrder = ViewBag.NombreEventoSortParam })
+        </th>
+        <th>
+            @Html.ActionLink("Asistente", "Index", new { sortOrder = ViewBag.NombreAsistenteSortParam })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Evento.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Asistente.Nombre)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.InscripcionId }, new { @class = "btn btn-warning" }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.InscripcionId }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.InscripcionId }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.currentSort, currentFilter = ViewBag.CurrentFilter }))
